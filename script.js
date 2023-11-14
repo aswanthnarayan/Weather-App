@@ -1,20 +1,19 @@
-    // const apiKey = '40df1897895146cbbe4211346231211';
-    const mainDetails = document.querySelector('.main-details')
+
     const cityInput = document.getElementById('search');
-    const temperature = document.getElementById('temperature');
-    const weatherInfo = document.getElementById('weather-info');
-    const cityName = document.getElementById('city-name')
     const findButton = document.getElementById('find-weather');
-    const infoImg=document.querySelector(".condition img");
     const contentDiv=document.querySelector(".content");
 
 
     
 
 function getWeather() {
-  const existingCity=document.querySelector('.forecast-container');
-        if(existingCity){
-            existingCity.remove(); /// to remove the existing forecast details
+    const existingForecast=document.querySelector('.forecast-container');
+    const existingDetails = document.querySelector('.main-details')
+        if(existingForecast){
+            existingForecast.remove(); /// to remove the existing forecast details
+        }
+        if(existingDetails){
+            existingDetails.remove();
         }
     const city = cityInput.value;
     fetch(`
@@ -22,15 +21,21 @@ function getWeather() {
         .then(response => response.json())
         .then(data => {
             console.log(data);
-                const temp = data.current.temp_c; 
-                temperature.innerText=Math.round(temp); //add current temp value
-                cityName.innerHTML=data.location.name; //add city name
-                //add weather info& icon
-                weatherInfo.innerText=data.current.condition.text;  
-                let src=data.current.condition.icon; 
-                infoImg.setAttribute('src',src)
-                infoImg.style.display="block"
+                const temp = data.current.temp_c;
+                let imgSrc=`https:${data.current.condition.icon}`;
 
+                const mainDetails = document.createElement('div');
+                mainDetails.className='main-details';
+                mainDetails.innerHTML=`
+                   <p id="city-name">${data.location.name}</p>
+                   <div class="data">
+                      <h1 id="temperature">${Math.round(temp)}</h1>
+                    <div class="condition">
+                      <p id="weather-info">${data.current.condition.text}</p>
+                    <img src=${imgSrc} alt=${data.current.condition.text}>
+                    </div>
+                `
+                contentDiv.appendChild(mainDetails)
               
             let forecastContainer=document.createElement('div');
             forecastContainer.className='forecast-container'
@@ -49,8 +54,9 @@ function getWeather() {
                         </div>
                         `
                             forecastContainer.appendChild(forecastDetails)
-                            contentDiv.appendChild(forecastContainer)
+                           
                 })    
+                contentDiv.appendChild(forecastContainer)
         })
         .catch(error => {
             // console.error('Error fetching data:', error);
