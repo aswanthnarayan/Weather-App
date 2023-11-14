@@ -7,13 +7,18 @@
     
 
 function getWeather() {
-    const existingForecast=document.querySelector('.forecast-container');
+    const existingForecast=document.querySelector('.forecast');
     const existingDetails = document.querySelector('.main-details')
+    const existingOtherDetails = document.querySelector('.other-details')
+
         if(existingForecast){
-            existingForecast.remove(); /// to remove the existing forecast details
+            existingForecast.remove(); 
         }
         if(existingDetails){
             existingDetails.remove();
+        }
+        if(existingOtherDetails){
+            existingOtherDetails.remove();
         }
     const city = cityInput.value;
     fetch(`
@@ -36,15 +41,19 @@ function getWeather() {
                     </div>
                 `
                 contentDiv.appendChild(mainDetails)
-              
+               
+
             let forecastContainer=document.createElement('div');
-            forecastContainer.className='forecast-container'
+                forecastContainer.className='forecast-container'
+                let forecast=document.createElement('div');
+                forecast.className='forecast'
+                forecast.innerHTML=`<p>3 Days Forecast</p>`
                 data.forecast.forecastday.forEach(days => {
                     let forecastDetails=document.createElement('div');
-                    forecastDetails.className="forecast";
+                    forecastDetails.className="forecast-main";
                     forecastDetails.innerHTML=`
-                    <p>${days.date}</p> 
-                    <div class="forecast-data">
+                      <p>${days.date}</p> 
+                        <div class="forecast-data">
                             <p>${days.day.condition.text}</p>
                             <img src="${days.day.condition.icon}" alt="${days.day.condition.text}">
                         </div>
@@ -54,9 +63,45 @@ function getWeather() {
                         </div>
                         `
                             forecastContainer.appendChild(forecastDetails)
-                           
+                            forecast.appendChild(forecastContainer)
                 })    
-                contentDiv.appendChild(forecastContainer)
+                
+                contentDiv.appendChild(forecast) ;
+
+
+                let otherDetailes=document.createElement('div');
+                otherDetailes.className='other-details'
+                otherDetailes.innerHTML=`
+                    <div class="humidity">
+                
+                        <div class="feels-like">
+                            <p>Feelslike</p>
+                            <p>${data.current.feelslike_c}</p>
+                        </div>
+                        <div class="humidity-data">
+                            <p>Humidity</p>
+                            <p>${data.current.humidity}</p>
+                        </div>
+                    </div>
+                    <div class="wind">
+                        <div class="wind-kph">
+                        <p>${data.current.wind_kph}</p>
+                            <div class="measurement">
+                                <p>KPH</p>
+                                <p>KPH</p>
+                            </div>
+                        </div>
+                        <div class="wind-gust">
+                        <p>${data.current.gust_kph}</p>
+                            <div class="measurement">
+                                <p>KPH</p>
+                                <p>KPH</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+                contentDiv.appendChild(otherDetailes) ;
+
         })
         .catch(error => {
             // console.error('Error fetching data:', error);
