@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
 }
 body{
     display: flex;
@@ -14,16 +15,17 @@ body{
     height: 500px;
     display: flex;
     flex-direction: column;
-
-}
+    color: #fff;
+    
 .content{
     height: 90%;
     background-color: aliceblue;
     display:flex ;
     flex-direction: column;
     align-items: center;
-    background-image:url(/Images/121491_Sleet\ sky\ with\ 3d\ effect_\ _xl-1024-v1-0.png) ;
-
+    background-image:url(/) ;
+    border-radius: .7rem .7rem 0rem 0rem;
+}
 }
 .searchbar{
     height: 10%;
@@ -36,6 +38,7 @@ body{
     flex: 1;
     height: 100%;
     width: 70%;
+
 }
 .searchbar input{
     width: 100%;
@@ -43,11 +46,15 @@ body{
     height: 100%;
     border: none;
     background-color: rgb(211, 225, 238);
+    padding-left: 1rem;
+    font-size: 1rem;
 }
 .searchbar button{
     width: 30%; /* The remaining width */
     height: 100%; 
     border: none;
+    font-size: .8rem;
+    background-color: rgb(174, 208, 240);
 }
 
 /* ////////////////////// */
@@ -60,7 +67,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* margin-top: .8rem; */
+    margin-top: .3rem;
     line-height: 2.5rem;
     backdrop-filter: blur(1px); /* Adjust the blur amount */
     -webkit-backdrop-filter: blur(8px);
@@ -84,7 +91,7 @@ body{
     display: flex;
     flex-direction: column;
     width: 90%;
-    margin: .5rem 0rem;
+    margin: .3rem 0rem;
     padding: .5rem 0rem;
     border-radius: .8rem;
     box-shadow: 1px 2px 3px 4px rgba(20,20,20,0.4);
@@ -92,10 +99,11 @@ body{
     -webkit-backdrop-filter: blur(8px);
 }
 .forecast>p{
-    color: blueviolet;
-    margin-left: 1.5rem;
+    /* color: blueviolet; */
+    margin-left: 1rem;
     margin-bottom: .4rem;
 }
+
 .forecast-container {
     display: flex;
    justify-content: space-evenly;
@@ -105,10 +113,13 @@ body{
     flex-direction: column;
     text-align: center;
 }
-.forecast-main>p{
-    margin-top: 0;
-    color: blue;
+.forecast-main .date{
+    font-size: small;
+    color: #121212;
+    opacity: .7;
+    margin-bottom: .2rem;
 }
+
 .forecast-data p{
    max-width: 100px;
    min-height: 36px;
@@ -146,19 +157,27 @@ body{
 .wind{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
+    
 }
 .wind-kph,.wind-gust{
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
+    
 }
 
 .wind-kph>p,.wind-gust>p{
-    font-size: 1.5rem;
+    margin-right: .3rem;
+    font-size: 1.8rem;
 }
 .wind-kph,.wind-gust 
 .measurement p{
     font-size: small;
+}
+.measurement p:first-child{
+    font-size: .7rem;
+    opacity: 0.9;
+    color: #e6e2e2;
 }
 
