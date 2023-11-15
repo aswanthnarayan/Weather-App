@@ -7,6 +7,9 @@
     
 
 function getWeather() {
+
+
+
     const existingForecast=document.querySelector('.forecast');
     const existingDetails = document.querySelector('.main-details')
     const existingOtherDetails = document.querySelector('.other-details')
@@ -26,6 +29,8 @@ function getWeather() {
         .then(response => response.json())
         .then(data => {
             console.log(data);
+                let WeatherCondition= data.current.condition.text;
+                console.log(WeatherCondition);
                 const temp = data.current.temp_c;
                 let imgSrc=`https:${data.current.condition.icon}`;
 
@@ -34,14 +39,14 @@ function getWeather() {
                 mainDetails.innerHTML=`
                    <p id="city-name">${data.location.name}</p>
                    <div class="data">
-                      <h1 id="temperature">${Math.round(temp)}</h1>
+                      <h1 id="temperature">${Math.round(temp)}&deg</h1>
                     <div class="condition">
                       <p id="weather-info">${data.current.condition.text}</p>
                     <img src=${imgSrc} alt=${data.current.condition.text}>
                     </div>
                 `
                 contentDiv.appendChild(mainDetails)
-               
+                backgroundGenerator(WeatherCondition);
 
             let forecastContainer=document.createElement('div');
                 forecastContainer.className='forecast-container'
@@ -88,20 +93,21 @@ function getWeather() {
                         <p>${data.current.wind_kph}</p>
                             <div class="measurement">
                                 <p>KPH</p>
-                                <p>KPH</p>
+                                <p>Wind</p>
                             </div>
                         </div>
                         <div class="wind-gust">
                         <p>${data.current.gust_kph}</p>
                             <div class="measurement">
                                 <p>KPH</p>
-                                <p>KPH</p>
+                                <p>Guests</p>
                             </div>
                         </div>
                     </div>
                 `
                 contentDiv.appendChild(otherDetailes) ;
-
+                   
+    
         })
         .catch(error => {
             // console.error('Error fetching data:', error);
@@ -117,4 +123,54 @@ findButton.addEventListener('click',getWeather);
 
 
 
-  
+  function backgroundGenerator(apiKey){
+    let bgImg=contentDiv;
+    switch (apiKey) {
+        case "Clear":
+            bgImg.style.backgroundImage = "url('/Images/Clear.png')";
+            break;
+        case "Sunny":
+                bgImg.style.backgroundImage = "url('/Images/Sunny.png')";
+                break;
+        case "Cloudy":
+                bgImg.style.backgroundImage = "url('/Images/Cloudy.png')";
+                break;
+        case "Overcast":
+                bgImg.style.backgroundImage = "url('/Images/Cloudy.png')";
+                break;
+        case "Rain":
+                bgImg.style.backgroundImage = "url('/Images/Rainy.png')";
+                break;
+        case "Snow":
+                bgImg.style.backgroundImage = "url('/Images/Snow.png')";
+                break;
+        case "Thunderstorms":
+                bgImg.style.backgroundImage = "url('/Images/Thunderstorm.png')";
+                break;
+        case "Fog":
+                bgImg.style.backgroundImage = "url('/Images/Fog.png')";
+                break;
+        case "Mist":
+                bgImg.style.backgroundImage = "url('/Images/Mist.png')";
+                break;
+        case "Mist":
+                bgImg.style.backgroundImage = "url('/Images/Mist.png')";
+                break;
+        case "Windy":
+                bgImg.style.backgroundImage = "url('/Images/Windy.png')";
+                break;
+        case "Partly Cloudy":
+                bgImg.style.backgroundImage = "url('/Images/Partly Cloudy.png')";
+                break;
+        case "Hail":
+                bgImg.style.backgroundImage = "url('/Images/Hail.png')";
+                break;
+        case "Sleet":
+                bgImg.style.backgroundImage = "url('/Images/Sleet.png')";
+                break;
+        default:
+                bgImg.style.backgroundImage = "url('/Images/default.png')";
+                break;
+
+    }
+  }
