@@ -7,9 +7,15 @@
 }
 body{
     display: flex;
+    flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
+}
+.app{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .main{
     width: 350px;
@@ -17,7 +23,7 @@ body{
     display: flex;
     flex-direction: column;
     color: #ffffff;
-    
+}
 .content{
     height: 90%;
     background-color: aliceblue;
@@ -27,13 +33,13 @@ body{
     background-image:url() ;
     border-radius: .7rem .7rem 0rem 0rem;
 }
-}
 .searchbar{
     height: 10%;
     background-color: rgb(190, 212, 212);
     display: flex;
     align-items: center;
     width: 100%;
+    margin-bottom: 1rem;
 }
 .searchbar label{
     flex: 1;
@@ -198,3 +204,6 @@ body{
     color: #e6e2e2;
 }
 
+.credits{
+    font-size: .7rem;
+}
