@@ -4,8 +4,9 @@
     const contentDiv=document.querySelector(".content");
 
 
+    //Default screen for weather app
     function onloadFetch(){
-        const city = 'kannur';
+        let city = 'kannur';
         fetch(`
         https://api.weatherapi.com/v1/forecast.json?key=40df1897895146cbbe4211346231211&q=${city}&days=3&aqi=yes&alerts=yes`)
             .then(response => response.json())
@@ -15,15 +16,13 @@
                     otherDataCreation(data);
             })
             .catch(error => {
-                // console.error('Error fetching data:', error);
-                // temperature.innerText="No Data Found"
-                // cityName.innerHTML="";
-                // weatherInfo.innerText="";  
-                // temperature.style.fontSize="1.5rem";
+                console.error('Error fetching data:', error);
+                
             });
     }
 
 
+// main function to fetch api and show data on the screen
 function getWeather() {
     const existingForecast=document.querySelector('.forecast');
     const existingDetails = document.querySelector('.main-details')
@@ -44,22 +43,33 @@ function getWeather() {
                 otherDataCreation(data);
         })
         .catch(error => {
-            // console.error('Error fetching data:', error);
-            // temperature.innerText="No Data Found"
-            // cityName.innerHTML="";
-            // weatherInfo.innerText="";  
-            // temperature.style.fontSize="1.5rem";
+            // contentDiv.innerHTML = '';
+            const errorImage = document.createElement('img');
+            errorImage.className='error';
+            errorImage.src = 'Images/error.png';
+            errorImage.alt = 'Error Image';
+            errorImage.style.width = '100%';
+            errorImage.style.height = '100%';
+            errorImage.style.backgroundSize = 'cover';
+            contentDiv.appendChild(errorImage);
+
+            setTimeout(() => {
+                contentDiv.innerHTML = ''; 
+                onloadFetch(); 
+            }, 3000)
+
         });
+        
 }
 
 
-window.addEventListener('DOMContentLoaded',onloadFetch)
-findButton.addEventListener('click',getWeather);
 
+
+//function for creating top div to show temprature and details 
 
 function WeatherDataCreation(data){
     let WeatherCondition= data.current.condition.text;
-    console.log(WeatherCondition);
+    // console.log(WeatherCondition);
     const temp = data.current.temp_c;
     let imgSrc=`https:${data.current.condition.icon}`;
     const mainDetails = document.createElement('div');
@@ -77,6 +87,7 @@ function WeatherDataCreation(data){
     backgroundGenerator(WeatherCondition);
 }
 
+//function for creating forecast-details
 
 function forecastDataCreation(data){
     let forecastContainer=document.createElement('div');
@@ -107,6 +118,7 @@ function forecastDataCreation(data){
 }
 
 
+//function for creating last two divs for wind and humidity data
 
         function otherDataCreation(data){
 
@@ -148,6 +160,7 @@ function forecastDataCreation(data){
 
 
 
+//function for changing the background according to weather condition 
 
   function backgroundGenerator(apiKey){
     let bgImg=contentDiv;
@@ -213,3 +226,8 @@ function forecastDataCreation(data){
     let newDate=newFormat[2]+'/'+newFormat[1]+'/'+newFormat[0];
     return newDate;
   }
+
+
+
+window.addEventListener('DOMContentLoaded',onloadFetch)
+findButton.addEventListener('click',getWeather);
